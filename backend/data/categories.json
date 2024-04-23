@@ -1,0 +1,12 @@
+[{
+  "_id": {
+    "$oid": "66267fce237062e38c31983b"
+  },
+  "name": "Truyện tranh",
+  "images": [
+    {
+      "public_id": "avatars/v8kqarlm1bvheyq0uwio",
+      "url": "https://res.cloudinary.com/dutjyu71n/image/upload/v1713682446/avatars/v8kqarlm1bvheyq0uwio.jpg"
+    }
+  ]
+}]
