@@ -21,7 +21,7 @@ const Banner = ({ src, search, text, text2 }) => {
             <h2>{text}</h2>
             <p>{text2}</p>
             {search === "true" ? (
-              <Route render={({ history }) => <Search history={history} />} />
+               <Search  />
             ) : (
               <></>
             )}

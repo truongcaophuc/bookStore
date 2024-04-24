@@ -5,7 +5,7 @@ import MetaData from "../layout/MetaData";
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { register, clearErrors } from "../../actions/userActions";
-import { Link, useHistory } from "react-router-dom";
+import { Link ,useNavigate} from "react-router-dom";
 
 const Register = () => {
   const [user, setUser] = useState({
@@ -27,18 +27,18 @@ const Register = () => {
   const { isAuthenticated, error, loading } = useSelector(
     (state) => state.auth
   );
-  const history = useHistory();
+  const navigate=useNavigate();
 
   useEffect(() => {
     if (isAuthenticated) {
-      history.push("/");
+      navigate("/");
     }
 
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, alert, isAuthenticated, error, history]);
+  }, [dispatch, alert, isAuthenticated, error]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -50,7 +50,7 @@ const Register = () => {
     formData.set("avatar", avatar);
     console.log("Dang ki thanh cong")
     dispatch(register(formData));
-    history.push("/");
+    navigate("/");
   };
 
   const onchange = (e) => {

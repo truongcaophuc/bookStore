@@ -39,19 +39,32 @@ exports.newProduct = catchAsyncErrors(async (req, res, next) => {
 
 // Get all products   =>   /api/v1/products?keyword=apple
 exports.getProducts = catchAsyncErrors(async (req, res, next) => {
+  let objectQuery={}
+  if(req.query.price){
+    objectQuery={name:{$regex:req.query.keyword,$options: 'i'},
+      $and: [
+        {price:{$lte:Number(req.query.price.lte)}},
+       { price:{$gte:Number(req.query.price.gte)}}
+       // So sánh nhỏ hơn hoặc bằng maxPrice
+      ],
+     
+    }
+
+  }
+  if(req.query.ratings){
+    objectQuery={...objectQuery,
+    ratings:{$gte:Number(req.query.ratings.gte)}
+    }
+  }
+  console.log("objquerry: ",objectQuery,"--------------------------------")
   const resPerPage = 12;
   const productsCount = await Product.countDocuments();
-
-  const apiFeatures = new APIFeatures(Product.find(), req.query)
-    .search()
-    .filter();
-
-  let products = await apiFeatures.query;
+  const currentPage = Number(req.query.page) || 1;
+        const skip = resPerPage * (currentPage - 1);
+  
+  //console.log(req.query)
+  let products = await Product.find(objectQuery).limit(resPerPage).skip(skip)
   let filteredProductsCount = products.length;
-
-  apiFeatures.pagination(resPerPage);
-  products = await apiFeatures.query;
-
   res.status(200).json({
     success: true,
     productsCount,

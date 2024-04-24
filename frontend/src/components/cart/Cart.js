@@ -2,14 +2,17 @@ import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 
 import MetaData from "../layout/MetaData";
-
+import { useNavigate } from 'react-router-dom';
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { addItemToCart, removeItemFromCart } from "../../actions/cartActions";
 
 const Cart = ({ history }) => {
   const dispatch = useDispatch();
-
+  const navigate=useNavigate()
+  const { isAuthenticated} = useSelector(
+    (state) => state.auth
+  );
   const { cartItems } = useSelector((state) => state.cart);
 
   const removeCartItemHandler = (id) => {
@@ -33,7 +36,9 @@ const Cart = ({ history }) => {
   };
 
   const checkoutHandler = () => {
-    history.push("/login?redirect=shipping");
+    if(!isAuthenticated)
+    navigate("/login");
+  else navigate("/checkout");
   };
 
   return (

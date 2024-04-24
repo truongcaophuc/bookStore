@@ -12,14 +12,15 @@ import { useAlert } from "react-alert";
 import { getProducts } from "../actions/productActions";
 import { getCategory } from "../actions/categoryActions";
 import Banner from "./layout/Banner";
-import { useLocation } from "react-router-dom";
+import { useLocation,useParams } from "react-router-dom";
 import CategorySection from "./layout/CategorySection";
 import Features from "./layout/Features";
 
 const { createSliderWithTooltip } = Slider;
 const Range = createSliderWithTooltip(Slider.Range);
 
-const Home = ({ match }) => {
+const Home = () => {
+  const params = useParams();
   const [currentPage, setCurrentPage] = useState(1);
   const [price, setPrice] = useState([1, 10000]);
   const [catagory, setCatagory] = useState("");
@@ -40,10 +41,7 @@ const Home = ({ match }) => {
     filteredProductsCount,
   } = useSelector((state) => state.products);
 
-  const keyword = match.params.keyword;
-  console.log(loading)
-
-  console.log("sản phẩm :",products)
+  const keyword = params.keyword;
   useEffect(() => {
     if (error) {
       return alert.error(error);
