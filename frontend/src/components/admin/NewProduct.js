@@ -14,19 +14,18 @@ const NewProduct = () => {
 	const [name, setName] = useState("");
 	const [price, setPrice] = useState(0);
 	const [description, setDescription] = useState("");
-	const [catagory, setCatagory] = useState("");
+	const [catagory, setCatagory] = useState("Truyện tranh");
 	const [stock, setStock] = useState(0);
 	const [seller, setSeller] = useState("");
 	const [images, setImages] = useState([]);
 	const [imagesPreview, setImagesPreview] = useState([]);
 
-	const { category } = useSelector((state) => state.category);
+	const { category :categories } = useSelector((state) => state.category);
 
 	const alert = useAlert();
 	const dispatch = useDispatch();
 
 	const { loading, error, success } = useSelector((state) => state.newProduct);
-
 	useEffect(() => {
 		if (error) {
 			alert.error(error);
@@ -140,9 +139,10 @@ const NewProduct = () => {
 											<select
 												className="form-control"
 												id="category_field"
-												onChange={(e) => setCatagory(e.target.value)}
+												onChange={(e) => {
+												setCatagory(e.target.value)}}
 											>
-												{category.map((category) => (
+												{categories.map((category) => (
 													<option key={category._id} value={category.name}>
 														{category.name}
 													</option>
