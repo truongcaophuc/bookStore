@@ -1,4 +1,6 @@
 const Order = require("../models/order");
+const User = require("../models/user");
+
 const Product = require("../models/product");
 
 const ErrorHandler = require("../utils/errorHandler");
@@ -17,8 +19,7 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
   } = req.body;
 
   console.log(req.body);
-
-  const order = await Order.create({
+  const order=new Order({
     orderItems,
     shippingInfo,
     itemsPrice,
@@ -28,8 +29,13 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
     paymentInfo,
     paidAt: Date.now(),
     user: req.user._id,
-  });
-
+  })
+  console.log("order moi tao",{
+   ten:2
+   
+  })
+  try{ await order.save()}
+  catch(err){console.log(err)}
   res.status(200).json({
     success: true,
     order,
@@ -38,11 +44,8 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
 
 // Get single order   =>   /api/v1/order/:id
 exports.getSingleOrder = catchAsyncErrors(async (req, res, next) => {
-  const order = await Order.findById(req.params.id).populate(
-    "user",
-    "name email"
-  );
-
+  const order=await Order.findById(req.params.id).populate(
+    "user")
   if (!order) {
     return next(new ErrorHandler("No Order found with this ID", 404));
   }
@@ -65,7 +68,6 @@ exports.myOrders = catchAsyncErrors(async (req, res, next) => {
 
 // Get all orders - ADMIN  =>   /api/v1/admin/orders/
 exports.allOrders = catchAsyncErrors(async (req, res, next) => {
-  console.log("lấy dữ liệu")
   const orders = await Order.find();
 
   let totalAmount = 0;
@@ -83,8 +85,8 @@ exports.allOrders = catchAsyncErrors(async (req, res, next) => {
 
 // Update / Process order - ADMIN  =>   /api/v1/admin/order/:id
 exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
+  console.log("order là",req.body)
   const order = await Order.findById(req.params.id);
-
   if (order.orderStatus === "Delivered") {
     return next(new ErrorHandler("You have already delivered this order", 400));
   }

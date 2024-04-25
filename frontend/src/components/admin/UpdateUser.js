@@ -2,25 +2,26 @@ import React, { Fragment, useState, useEffect } from 'react'
 
 import MetaData from '../layout/MetaData'
 import Sidebar from './Sidebar'
-
+import {useParams,useNavigate} from "react-router-dom"
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateUser, getUserDetails, clearErrors } from '../../actions/userActions'
 import { UPDATE_USER_RESET } from '../../constants/userConstants'
 
-const UpdateUser = ({ history, match }) => {
 
+const UpdateUser = () => {
+    const {id}=useParams()
 	const [name, setName] = useState('')
 	const [email, setEmail] = useState('')
 	const [role, setRole] = useState('')
 
 	const alert = useAlert();
 	const dispatch = useDispatch();
-
+    const navigate=useNavigate()
 	const { error, isUpdated } = useSelector(state => state.user);
 	const { user } = useSelector(state => state.userDetails)
 
-	const userId = match.params.id;
+	const userId =id
 
 	useEffect(() => {
 
@@ -41,14 +42,14 @@ const UpdateUser = ({ history, match }) => {
 		if (isUpdated) {
 			alert.success('User updated successfully')
 
-			history.push('/admin/users')
+			navigate('/admin/users')
 
 			dispatch({
 				type: UPDATE_USER_RESET
 			})
 		}
 
-	}, [dispatch, alert, error, history, isUpdated, userId, user])
+	}, [dispatch, alert, error, isUpdated, userId, user])
 
 	const submitHandler = (e) => {
 		e.preventDefault();

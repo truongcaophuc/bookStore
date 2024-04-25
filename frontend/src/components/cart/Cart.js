@@ -7,7 +7,7 @@ import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { addItemToCart, removeItemFromCart } from "../../actions/cartActions";
 
-const Cart = ({ history }) => {
+const Cart = () => {
   const dispatch = useDispatch();
   const navigate=useNavigate()
   const { isAuthenticated} = useSelector(
@@ -38,7 +38,7 @@ const Cart = ({ history }) => {
   const checkoutHandler = () => {
     if(!isAuthenticated)
     navigate("/login");
-  else navigate("/checkout");
+  else navigate("/shipping");
   };
 
   return (

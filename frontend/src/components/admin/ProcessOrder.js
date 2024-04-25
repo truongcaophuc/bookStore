@@ -4,14 +4,14 @@ import { Link } from 'react-router-dom'
 import MetaData from '../layout/MetaData'
 import Loader from '../layout/Loader'
 import Sidebar from './Sidebar'
-
+import { useParams } from 'react-router-dom';
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { getOrderDetails, updateOrder, clearErrors } from '../../actions/orderActions'
 import { UPDATE_ORDER_RESET } from '../../constants/orderConstants'
 
-const ProcessOrder = ({ match }) => {
-
+const ProcessOrder = () => {
+	const { id } = useParams();
 	const [status, setStatus] = useState('');
 
 	const alert = useAlert();
@@ -21,7 +21,7 @@ const ProcessOrder = ({ match }) => {
 	const { shippingInfo, orderItems, paymentInfo, user, totalPrice, orderStatus } = order
 	const { error, isUpdated } = useSelector(state => state.order)
 
-	const orderId = match.params.id;
+	const orderId = id;
 
 	useEffect(() => {
 

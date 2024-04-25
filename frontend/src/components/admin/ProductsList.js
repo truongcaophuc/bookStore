@@ -10,9 +10,10 @@ import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAdminProducts, deleteProduct, clearErrors } from '../../actions/productActions'
 import { DELETE_PRODUCT_RESET } from '../../constants/productConstants'
+import {useNavigate} from "react-router-dom"
 
-const ProductsList = ({ history }) => {
-
+const ProductsList = () => {
+    const navigate=useNavigate()
 	const alert = useAlert();
 	const dispatch = useDispatch();
 
@@ -34,11 +35,11 @@ const ProductsList = ({ history }) => {
 
 		if (isDeleted) {
 			alert.success('Product deleted successfully');
-			history.push('/admin/products');
+			navigate('/admin/products');
 			dispatch({ type: DELETE_PRODUCT_RESET })
 		}
 
-	}, [dispatch, alert, error, deleteError, isDeleted, history])
+	}, [dispatch, alert, error, deleteError, isDeleted])
 
 	const setProducts = () => {
 		const data = {

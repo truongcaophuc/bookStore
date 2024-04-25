@@ -75,6 +75,7 @@ function App() {
           <Route path="/shipping" element={<Shipping/>} />
           <Route path="/confirm" element={<ConfirmOrder/>} />
           <Route path="/success" element={<OrderSuccess/>} />
+          <Route path="/payment" element={<Payment/>} />
           <Route path="/me" element={<Profile/>} />
           <Route path="/me/update" element={<UpdateProfile/>} />
           <Route path="/password/update"element={<UpdatePassword/>}/>

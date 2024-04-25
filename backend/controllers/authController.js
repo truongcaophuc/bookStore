@@ -36,7 +36,6 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
 // Login User  =>  /a[i/v1/login
 exports.loginUser = catchAsyncErrors(async (req, res, next) => {
     const { token } = req.cookies
-    console.log("token là:",token)
     const { email, password } = req.body;
 
     // Checks if email and password is entered by user

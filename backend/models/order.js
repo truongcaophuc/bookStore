@@ -49,7 +49,7 @@ const orderSchema = mongoose.Schema({
             product: {
                 type: mongoose.Schema.Types.ObjectId,
                 required: true,
-                ref: 'Product'
+                ref: 'products'
             }
         }
     ],
@@ -98,6 +98,6 @@ const orderSchema = mongoose.Schema({
         default: Date.now
     }
 
-})
+}, { strict: false })
 
 module.exports = mongoose.model('Order', orderSchema)

@@ -8,8 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { newProduct, clearErrors } from "../../actions/productActions";
 import { NEW_PRODUCT_RESET } from "../../constants/productConstants";
 import Loader from "../layout/Loader";
-
-const NewProduct = ({ history }) => {
+import {useNavigate} from "react-router-dom"
+const NewProduct = () => {
+    const navigate=useNavigate()
 	const [name, setName] = useState("");
 	const [price, setPrice] = useState(0);
 	const [description, setDescription] = useState("");
@@ -33,11 +34,11 @@ const NewProduct = ({ history }) => {
 		}
 
 		if (success) {
-			history.push("/admin/products");
+			navigate("/admin/products");
 			alert.success("Product created successfully");
 			dispatch({ type: NEW_PRODUCT_RESET });
 		}
-	}, [dispatch, alert, error, success, history]);
+	}, [dispatch, alert, error, success]);
 
 	const submitHandler = (e) => {
 		e.preventDefault();

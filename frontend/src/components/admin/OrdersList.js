@@ -10,9 +10,9 @@ import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { allOrders, deleteOrder, clearErrors } from '../../actions/orderActions'
 import { DELETE_ORDER_RESET } from '../../constants/orderConstants'
-
-const OrdersList = ({ history }) => {
-
+import {useNavigate} from "react-router-dom"
+const OrdersList = () => {
+	const navigate=useNavigate() 
 	const alert = useAlert();
 	const dispatch = useDispatch();
 
@@ -29,11 +29,11 @@ const OrdersList = ({ history }) => {
 
 		if (isDeleted) {
 			alert.success('Order deleted successfully');
-			history.push('/admin/orders');
+			navigate('/admin/orders');
 			dispatch({ type: DELETE_ORDER_RESET })
 		}
 
-	}, [dispatch, alert, error, isDeleted, history])
+	}, [dispatch, alert, error, isDeleted])
 
 	const deleteOrderHandler = (id) => {
 		dispatch(deleteOrder(id))

@@ -7,9 +7,9 @@ import Loader from '../layout/Loader'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { getOrderDetails, clearErrors } from '../../actions/orderActions'
-
-const OrderDetails = ({ match }) => {
-
+import {useParams} from "react-router-dom"
+const OrderDetails = () => {
+    const { id } = useParams();
     const alert = useAlert();
     const dispatch = useDispatch();
 
@@ -17,13 +17,13 @@ const OrderDetails = ({ match }) => {
     const { shippingInfo, orderItems, paymentInfo, user, totalPrice, orderStatus } = order
 
     useEffect(() => {
-        dispatch(getOrderDetails(match.params.id));
+        dispatch(getOrderDetails(id));
 
         if (error) {
             alert.error(error);
             dispatch(clearErrors())
         }
-    }, [dispatch, alert, error, match.params.id])
+    }, [dispatch, alert, error,id])
 
     const shippingDetails = shippingInfo && `${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.postalCode}, ${shippingInfo.country}`
 

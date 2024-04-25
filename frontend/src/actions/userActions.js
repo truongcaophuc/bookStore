@@ -53,9 +53,6 @@ export const login = (email, password) => async (dispatch) => {
         const {data}= await axios.post('http://localhost:4000/api/v1/login', { email, password }, {
             withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
           },config)
-          console.log(data.token)
-        document.cookie=data.token;
-
         dispatch({
             type: LOGIN_SUCCESS,
             payload: data.user
@@ -236,7 +233,7 @@ export const logout = () => async (dispatch) => {
     try {
 
         await axios.get('http://localhost:4000/api/v1/logout')
-
+        document.cookie="token="
         dispatch({
             type: LOGOUT_SUCCESS,
         })

@@ -8,8 +8,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { NEW_CATRGORY_RESET } from "../../constants/categoryConstants";
 import { newCategory, clearErrors } from "../../actions/categoryActions";
 import Loader from "../layout/Loader";
+import {useNavigate} from "react-router-dom"
 
-const NewCategory = ({ history }) => {
+const NewCategory = () => {
+    const navigate=useNavigate()
 	const [name, setName] = useState("");
 	const [images, setImages] = useState([]);
 	const [imagesPreview, setImagesPreview] = useState([]);
@@ -26,11 +28,11 @@ const NewCategory = ({ history }) => {
 		}
 
 		if (success) {
-			history.push("/admin/category");
+			navigate("/admin/category");
 			alert.success("Category created successfully");
 			dispatch({ type: NEW_CATRGORY_RESET });
 		}
-	}, [dispatch, alert, error, success, history]);
+	}, [dispatch, alert, error, success]);
 
 	const submitHandler = (e) => {
 		e.preventDefault();

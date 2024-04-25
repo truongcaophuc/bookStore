@@ -1,13 +1,14 @@
 import React, { Fragment } from 'react'
-import { Link } from 'react-router-dom'
-
+import { Link ,useNavigate} from 'react-router-dom'
+import {v4 as uuidv4} from "uuid"
 import MetaData from '../layout/MetaData'
 import CheckoutSteps from './CheckoutSteps'
+import { createOrder, clearErrors } from "../../actions/orderActions";
+import { useSelector,useDispatch } from 'react-redux'
 
-import { useSelector } from 'react-redux'
-
-const ConfirmOrder = ({ history }) => {
-
+const ConfirmOrder = () => {
+    const navigate=useNavigate()
+  const dispatch = useDispatch();
     const { cartItems, shippingInfo } = useSelector(state => state.cart)
     const { user } = useSelector(state => state.auth)
 
@@ -16,17 +17,34 @@ const ConfirmOrder = ({ history }) => {
     const shippingPrice = itemsPrice > 200 ? 0 : 25
     const taxPrice = Number((0.05 * itemsPrice).toFixed(2))
     const totalPrice = (itemsPrice + shippingPrice + taxPrice).toFixed(2)
-
-    const processToPayment = () => {
+    const randomNumber = Math.floor(Math.random() * 1000000);
+    const processToPayment = async () => {
         const data = {
-            itemsPrice: itemsPrice.toFixed(2),
+            orderCode:randomNumber,
+            itemsPrice: Math.floor(itemsPrice),
             shippingPrice,
             taxPrice,
-            totalPrice
+            totalPrice:Math.floor(totalPrice)
         }
 
         sessionStorage.setItem('orderInfo', JSON.stringify(data))
-        history.push('/payment')
+        const order = {
+            orderItems: cartItems,
+            shippingInfo,
+            ...data
+          };
+          dispatch(createOrder(order));
+        
+       
+        const res=await fetch('http://localhost:4000/api/v1/create-payment-link',{
+            method: 'POST', 
+            headers: {
+              'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify(data) 
+          })
+          const link=await res.json()
+       //window.location.href=(link.paymentLink)
     }
 
     return (

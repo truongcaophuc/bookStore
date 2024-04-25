@@ -41,7 +41,6 @@ exports.newCategory = catchAsyncErrors(async (req, res, next) => {
 // Get all genres   =>   /api/v1/genres
 exports.getCategory = catchAsyncErrors(async (req, res, next) => {
   const category = await Category.find({});
-  console.log("đã tìm kiếm",category)
   res.status(200).json({
     success: true,
     category,

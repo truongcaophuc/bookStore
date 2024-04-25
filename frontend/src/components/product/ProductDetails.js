@@ -15,8 +15,9 @@ import {
 import { addItemToCart } from "../../actions/cartActions";
 import { NEW_REVIEW_RESET } from "../../constants/productConstants";
 import RelatedProducts from "./RelatedProducts";
-
-const ProductDetails = ({ match }) => {
+import {useParams} from "react-router-dom"
+const ProductDetails = () => {
+  const {id}=useParams()
   const [quantity, setQuantity] = useState(1);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
@@ -32,7 +33,7 @@ const ProductDetails = ({ match }) => {
     (state) => state.newReview
   );
   useEffect(() => {
-    dispatch(getProductDetails(match.params.id));
+    dispatch(getProductDetails(id));
     dispatch(getProducts());
 
     if (error) {
@@ -49,10 +50,10 @@ const ProductDetails = ({ match }) => {
       alert.success("Reivew posted successfully");
       dispatch({ type: NEW_REVIEW_RESET });
     }
-  }, [dispatch, alert, error, reviewError, match.params.id, success]);
+  }, [dispatch, alert, error, reviewError,id, success]);
 
   const addToCart = () => {
-    dispatch(addItemToCart(match.params.id, quantity));
+    dispatch(addItemToCart(id, quantity));
     alert.success("Item Added to Cart");
   };
 
@@ -117,7 +118,7 @@ const ProductDetails = ({ match }) => {
 
     formData.set("rating", rating);
     formData.set("comment", comment);
-    formData.set("productId", match.params.id);
+    formData.set("productId", id);
 
     dispatch(newReview(formData));
   };

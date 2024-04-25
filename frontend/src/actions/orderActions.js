@@ -43,7 +43,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: CREATE_ORDER_FAIL,
-      payload: error.response.data.message,
+      payload: error,
     });
   }
 };
@@ -64,7 +64,7 @@ export const myOrders = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: MY_ORDERS_FAIL,
-      payload: error.response.data.message,
+      payload: error,
     });
   }
 };
@@ -85,7 +85,7 @@ export const getOrderDetails = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ORDER_DETAILS_FAIL,
-      payload: error.response.data.message,
+      payload: error,
     });
   }
 };
@@ -123,10 +123,11 @@ export const updateOrder = (id, orderData) => async (dispatch) => {
     };
 
     const { data } = await axios.put(
-      `http://localhost:4000/api/v1/admin/order/${id}`,	{
+      `http://localhost:4000/api/v1/admin/order/${id}`,
+      orderData,
+      {
 				withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
 			  },
-      orderData,
       config
     );
 
@@ -135,9 +136,10 @@ export const updateOrder = (id, orderData) => async (dispatch) => {
       payload: data.success,
     });
   } catch (error) {
+    console.log(error)
     dispatch({
       type: UPDATE_ORDER_FAIL,
-      payload: error.response.data.message,
+      payload: error,
     });
   }
 };
@@ -158,7 +160,7 @@ export const deleteOrder = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: DELETE_ORDER_FAIL,
-      payload: error.response.data.message,
+      payload: error,
     });
   }
 };
