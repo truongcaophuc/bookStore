@@ -28,6 +28,13 @@ const orderSchema = mongoose.Schema({
         required: true,
         ref: 'User'
     },
+    orderCode:{
+        type:Number,
+        required: true
+    },
+    checkoutUrl:{
+        type:String,
+    },
     orderItems: [
         {
             name: {

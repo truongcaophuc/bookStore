@@ -14,7 +14,7 @@ const OrderDetails = () => {
     const dispatch = useDispatch();
 
     const { loading, error, order = {} } = useSelector(state => state.orderDetails)
-    const { shippingInfo, orderItems, paymentInfo, user, totalPrice, orderStatus } = order
+    const { shippingInfo, orderItems, paidAt, user, totalPrice, orderStatus ,checkoutUrl} = order
 
     useEffect(() => {
         dispatch(getOrderDetails(id));
@@ -27,7 +27,7 @@ const OrderDetails = () => {
 
     const shippingDetails = shippingInfo && `${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.postalCode}, ${shippingInfo.country}`
 
-    const isPaid = paymentInfo && paymentInfo.status === 'succeeded' ? true : false
+    const isPaid = paidAt ? true : false
 
     return (
         <Fragment>
@@ -50,7 +50,9 @@ const OrderDetails = () => {
 
                             <h4 className="my-4">Payment</h4>
                             <p className={isPaid ? "greenColor" : "redColor"}><b>{isPaid ? "PAID" : "NOT PAID"}</b></p>
-
+        
+                            <a href={checkoutUrl} className="text-[#4941d6]">Link thanh toán</a>
+                        
 
                             <h4 className="my-4">Order Status:</h4>
                             <p className={order.orderStatus && String(order.orderStatus).includes('Delivered') ? "greenColor" : "redColor"} ><b>{orderStatus}</b></p>

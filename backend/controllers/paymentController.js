@@ -1,24 +1,37 @@
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors')
 const PayOS = require("@payos/node");
-const payOS = new PayOS("54720eb6-968f-4d16-95f4-0ea700b748b1", "32de0061-8a6d-4d70-a833-da73d006c619", "6543ff99bd6ed89a309fb1fc8c0cd596ec14e406758bd4cb0e6cb6cccb96e463");
-
-// Process stripe payments   =>   /api/v1/payment/process
+const payOS = new PayOS("1f64a334-ed53-4910-8b54-446f1abe31b0","13846070-6e95-4f38-8bac-b3756a4782ee","740a7476a53bfc09c632da6b9113b8638aa8941dd91434ba24ccd19ee4b0a57a");
+const Order = require("../models/order");
+// Process payments   =>   /api/v1/payment/process
 exports.receiveHookPayment = catchAsyncErrors(async (req, res, next) => {
     console.log(req.body)
-      res.json({})
-
+    const {data,success} = req.body;
+    const {orderCode,amount}=data
+    const donhang=await Order.findOne({orderCode})
+    if(donhang){
+    if(Number(amount)===donhang.totalPrice && success ){
+      await Order.updateOne({orderCode},{paidAt:Date.now()})
+    }
+      res.status(200).json({success:true}) }
+    else res.json({})
 })
 exports.createPaymentLink = catchAsyncErrors(async (req, res, next) => {
     const {orderCode,totalPrice}=req.body
+    console.log(req.body)
     const body = {
-        orderCode: orderCode,
+        orderCode,
         amount: totalPrice,
         description: "Thanh toan don hang",
         cancelUrl: 'http://localhost:3000/cart',
         returnUrl: 'http://localhost:3000'
       };
-      // const paymentLinkRes = await payOS.createPaymentLink(body);
-      // res.json({paymentLink: paymentLinkRes.checkoutUrl})
-      res.json({name:1})
+      try{
+        //const cancelledPaymentLink = await payOS.cancelPaymentLink(1111); 
+       const {checkoutUrl} = await payOS.createPaymentLink(body);
+       await Order.updateOne({orderCode},{checkoutUrl})
+      res.json({checkoutUrl})
+      }
+      catch(err){console.log(err)}
+      res.json({name:1}) 
 })
 

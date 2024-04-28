@@ -18,7 +18,7 @@ const ProcessOrder = () => {
 	const dispatch = useDispatch();
 
 	const { loading, order = {} } = useSelector(state => state.orderDetails)
-	const { shippingInfo, orderItems, paymentInfo, user, totalPrice, orderStatus } = order
+	const { shippingInfo, orderItems, paymentInfo, user, totalPrice, orderStatus,paidAt } = order
 	const { error, isUpdated } = useSelector(state => state.order)
 
 	const orderId = id;
@@ -50,7 +50,7 @@ const ProcessOrder = () => {
 	}
 
 	const shippingDetails = shippingInfo && `${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.postalCode}, ${shippingInfo.country}`
-	const isPaid = paymentInfo && paymentInfo.status === 'succeeded' ? true : false
+	const isPaid = paidAt ? true : false
 
 	return (
 		<Fragment>

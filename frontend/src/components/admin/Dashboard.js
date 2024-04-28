@@ -27,7 +27,6 @@ const Dashboard = () => {
 			outOfStock += 1;
 		}
 	})
-    console.log("component re render")
 	useEffect(() => {
 		dispatch(getAdminProducts())
 		dispatch(allOrders())

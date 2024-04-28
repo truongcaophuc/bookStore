@@ -43,8 +43,9 @@ const ConfirmOrder = () => {
             },
             body: JSON.stringify(data) 
           })
-          const link=await res.json()
-       //window.location.href=(link.paymentLink)
+          const {checkoutUrl}=await res.json()
+       window.location.href=checkoutUrl
+
     }
 
     return (
