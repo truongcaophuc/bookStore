@@ -32,7 +32,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.post("http://localhost:4000/api/v1/order/new", order,	{
+    const { data } = await axios.post("https://book-store-api-red.vercel.app/api/v1/order/new", order,	{
       withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
       }, config);
 
@@ -53,7 +53,7 @@ export const myOrders = () => async (dispatch) => {
   try {
     dispatch({ type: MY_ORDERS_REQUEST });
 
-    const { data } = await axios.get("http://localhost:4000/api/v1/orders/me",	{
+    const { data } = await axios.get("https://book-store-api-red.vercel.app/api/v1/orders/me",	{
       withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
       },);
 
@@ -74,7 +74,7 @@ export const getOrderDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: ORDER_DETAILS_REQUEST });
 
-    const { data } = await axios.get(`http://localhost:4000/api/v1/order/${id}`,	{
+    const { data } = await axios.get(`https://book-store-api-red.vercel.app/api/v1/order/${id}`,	{
       withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
       },);
 
@@ -95,7 +95,7 @@ export const allOrders = () => async (dispatch) => {
   try {
     dispatch({ type: ALL_ORDERS_REQUEST });
 
-    const { data } = await axios.get(`http://localhost:4000/api/v1/admin/orders`,	{
+    const { data } = await axios.get(`https://book-store-api-red.vercel.app/api/v1/admin/orders`,	{
       withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
       },);
 
@@ -123,7 +123,7 @@ export const updateOrder = (id, orderData) => async (dispatch) => {
     };
 
     const { data } = await axios.put(
-      `http://localhost:4000/api/v1/admin/order/${id}`,
+      `https://book-store-api-red.vercel.app/api/v1/admin/order/${id}`,
       orderData,
       {
 				withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
@@ -149,7 +149,7 @@ export const deleteOrder = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_ORDER_REQUEST });
 
-    const { data } = await axios.delete(`http://localhost:4000/api/v1/admin/order/${id}`,	{
+    const { data } = await axios.delete(`https://book-store-api-red.vercel.app/api/v1/admin/order/${id}`,	{
       withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
       },);
 
