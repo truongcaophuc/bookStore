@@ -18,13 +18,13 @@ const options = {
 
 ReactDOM.render(
   <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
+    
     <AlertProvider template={AlertTemplate} {...options}>
       <Router>
         <App />
       </Router>
     </AlertProvider>
-    </PersistGate>
+
   </Provider>,
   document.getElementById("root")
 );
