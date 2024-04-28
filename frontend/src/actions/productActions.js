@@ -48,7 +48,6 @@ export const getProducts =
 				}
 
 				const { data } = await axios.get(link);
-               console.log(data)
 				dispatch({
 					type: ALL_PRODUCTS_SUCCESS,
 					payload: data,
@@ -167,7 +166,6 @@ export const getProductDetails = (id) => async (dispatch) => {
 export const newReview = (reviewData) => async (dispatch) => {
 	try {
 		dispatch({ type: NEW_REVIEW_REQUEST });
-
 		const config = {
 			headers: {
 				"Content-Type": "application/json",
