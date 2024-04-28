@@ -74,7 +74,7 @@ let initialState = {
 
 const middlware = [thunk];
 export const store = createStore(
-	persistedReducer,
+	reducer,
 	initialState,
 	composeWithDevTools(applyMiddleware(...middlware))
 );
