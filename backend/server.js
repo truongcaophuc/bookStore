@@ -18,7 +18,13 @@ if (process.env.NODE_ENV !== 'PRODUCTION') require('dotenv').config({ path: 'con
 
 
 // Connecting to database
-connectDatabase();
+//connectDatabase();
+mongoose
+    .connect("mongodb+srv://phuccao:cp31012003@cluster0.fdtoihy.mongodb.net/shopit", { 
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+    })
 
 // Setting up cloudinary configuration
 cloudinary.config({
