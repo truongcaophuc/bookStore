@@ -29,7 +29,7 @@ const auth = require("./routes/auth");
 const payment = require("./routes/payment");
 const order = require("./routes/order");
 const category = require("./routes/category");
-app.use("/",(req,res,next)=>{res.json({name:2})})
+//app.use("/",(req,res,next)=>{res.json({name:2})})
 app.use("/api/v1", products);
 app.use("/api/v1", auth);
 app.use("/api/v1", payment);
