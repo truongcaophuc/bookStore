@@ -50,7 +50,8 @@ import Contact from "./components/Contact";
 
 function App() {
   useEffect(() => {
-    store.dispatch(loadUser());
+
+    //store.dispatch(loadUser());
   }, []);
 
   return (
