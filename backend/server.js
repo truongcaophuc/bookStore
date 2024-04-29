@@ -1,5 +1,6 @@
 const app = require('./app')
 const connectDatabase = require('./config/database')
+const mongoose = require("mongoose");
 
 // const dotenv = require('dotenv');
 const cloudinary = require('cloudinary').v2
