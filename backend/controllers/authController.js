@@ -1,5 +1,5 @@
 const User = require('../models/user');
-
+const bcrypt=require('bcryptjs')
 const ErrorHandler = require('../utils/errorHandler');
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const sendToken = require('../utils/jwtToken');
@@ -50,7 +50,7 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
     }
 
     // Checks if password is correct or not
-    const isPasswordMatched = await user.comparePassword(password);
+    const isPasswordMatched = await bcrypt.compare(password,user.password);
 
     if (!isPasswordMatched) {
         return next(new ErrorHandler('Invalid Email or Password', 401));
