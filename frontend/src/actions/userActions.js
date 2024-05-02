@@ -53,7 +53,7 @@ export const login = (email, password) => async (dispatch) => {
         const {data}= await axios.post('https://backend-bookstore-se81.onrender.com/api/v1/login', { email, password }, {
             withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
           },config)
-          document.cookie = `token=${data}`;
+          document.cookie = `token=${data.token}`;
         dispatch({
             type: LOGIN_SUCCESS,
             payload: data.user
