@@ -1,13 +1,14 @@
 import React, { Fragment, useState, useEffect } from 'react'
 
 import MetaData from '../layout/MetaData'
-
+import {useNavigate,useParams} from "react-router-dom"
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { resetPassword, clearErrors } from '../../actions/userActions'
 
-const NewPassword = ({ history, match }) => {
-
+const NewPassword = () => {
+    const navigate=useNavigate()
+    const {token}=useParams()
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
 
@@ -25,10 +26,10 @@ const NewPassword = ({ history, match }) => {
 
         if (success) {
             alert.success('Password updated successfully')
-            history.push('/login')
+            navigate('/login')
         }
 
-    }, [dispatch, alert, error, success, history])
+    }, [dispatch, alert, error, success])
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -37,7 +38,7 @@ const NewPassword = ({ history, match }) => {
         formData.set('password', password);
         formData.set('confirmPassword', confirmPassword);
 
-        dispatch(resetPassword(match.params.token, formData))
+        dispatch(resetPassword(token, formData))
     }
 
     return (
