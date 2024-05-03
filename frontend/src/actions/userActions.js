@@ -214,7 +214,6 @@ export const forgotPassword = (email) => async (dispatch) => {
 // Reset password
 export const resetPassword = (token, passwords) => async (dispatch) => {
     try {
-  const token=JSON.parse(localStorage.getItem('token'))
         dispatch({ type: NEW_PASSWORD_REQUEST })
 
         const config = {
