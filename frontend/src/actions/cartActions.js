@@ -2,8 +2,13 @@ import axios from 'axios'
 import { ADD_TO_CART, REMOVE_ITEM_CART, SAVE_SHIPPING_INFO } from '../constants/cartConstants'
 
 export const addItemToCart = (id, quantity) => async (dispatch, getState) => {
+    const token=JSON.parse(localStorage.getItem('token'))
+    
     const { data } = await axios.get(`https://backend-bookstore-se81.onrender.com/api/v1/product/${id}`,	{
-        withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
+        headers: {
+            'Authorization': `Bearer ${token}`
+          },     
+    withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
       },)
 
     dispatch({

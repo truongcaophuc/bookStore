@@ -47,6 +47,7 @@ export const login = (email, password) => async (dispatch) => {
         const config = {
             headers: {
                 'Content-Type': 'application/json'
+                
             }
         }
 
@@ -80,7 +81,7 @@ export const register = (userData) => async (dispatch) => {
         }
         console.log("Gửi yêu cầu thành công")
         const { data } = await axios.post('https://backend-bookstore-se81.onrender.com/api/v1/register', userData, config)
-
+        document.cookie = `token=${data.token}`;
         dispatch({
             type: REGISTER_USER_SUCCESS,
             payload: data.user
@@ -99,8 +100,11 @@ export const loadUser = () => async (dispatch) => {
     try {
 
         //dispatch({ type: LOAD_USER_REQUEST })
-        
+        const token=JSON.parse(localStorage.getItem('token'))
         const { data } = await axios.get('https://backend-bookstore-se81.onrender.com/api/v1/me',{
+            headers: {
+                'Authorization': `Bearer ${token}`
+              },
             withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
           })
 
@@ -120,7 +124,7 @@ export const loadUser = () => async (dispatch) => {
 // Update profile
 export const updateProfile = (userData) => async (dispatch) => {
     try {
-
+        const token=JSON.parse(localStorage.getItem('token'))
         dispatch({ type: UPDATE_PROFILE_REQUEST })
 
         const config = {
@@ -130,6 +134,9 @@ export const updateProfile = (userData) => async (dispatch) => {
         }
 
         const { data } = await axios.put('https://backend-bookstore-se81.onrender.com/api/v1/me/update', userData,{
+            headers: {
+                'Authorization': 'Bearer your_access_token'
+              },
             withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
           } ,config)
 
@@ -149,7 +156,7 @@ export const updateProfile = (userData) => async (dispatch) => {
 // Update password
 export const updatePassword = (passwords) => async (dispatch) => {
     try {
-
+        const token=JSON.parse(localStorage.getItem('token'))
         dispatch({ type: UPDATE_PASSWORD_REQUEST })
 
         const config = {
@@ -159,7 +166,10 @@ export const updatePassword = (passwords) => async (dispatch) => {
         }
 
         const { data } = await axios.put('https://backend-bookstore-se81.onrender.com/api/v1/password/update', passwords,{
-            withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
+        headers: {
+                'Authorization': `Bearer ${token}`
+              },    
+        withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
           }, config)
 
         dispatch({
@@ -178,7 +188,7 @@ export const updatePassword = (passwords) => async (dispatch) => {
 // Forgot password
 export const forgotPassword = (email) => async (dispatch) => {
     try {
-
+        const token=JSON.parse(localStorage.getItem('token'))
         dispatch({ type: FORGOT_PASSWORD_REQUEST })
 
         const config = {
@@ -205,7 +215,7 @@ export const forgotPassword = (email) => async (dispatch) => {
 // Reset password
 export const resetPassword = (token, passwords) => async (dispatch) => {
     try {
-
+  const token=JSON.parse(localStorage.getItem('token'))
         dispatch({ type: NEW_PASSWORD_REQUEST })
 
         const config = {
@@ -250,11 +260,14 @@ export const logout = () => async (dispatch) => {
 // Get all users
 export const allUsers = () => async (dispatch) => {
     try {
-
+        const token=JSON.parse(localStorage.getItem('token'))
         dispatch({ type: ALL_USERS_REQUEST })
 
         const { data } = await axios.get('https://backend-bookstore-se81.onrender.com/api/v1/admin/users',	{
-            withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
+        headers: {
+                'Authorization': `Bearer ${token}`
+              },    
+        withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
           })
 
         dispatch({
@@ -273,7 +286,7 @@ export const allUsers = () => async (dispatch) => {
 // Update user - ADMIN
 export const updateUser = (id, userData) => async (dispatch) => {
     try {
-
+        const token=JSON.parse(localStorage.getItem('token'))
         dispatch({ type: UPDATE_USER_REQUEST })
 
         const config = {
@@ -283,7 +296,10 @@ export const updateUser = (id, userData) => async (dispatch) => {
         }
 
         const { data } = await axios.put(`https://backend-bookstore-se81.onrender.com/api/v1/admin/user/${id}`, userData,	{
-            withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
+        headers: {
+                'Authorization': `Bearer ${token}`
+              },    
+        withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
           }, config)
 
         dispatch({
@@ -302,12 +318,15 @@ export const updateUser = (id, userData) => async (dispatch) => {
 // Get user details - ADMIN
 export const getUserDetails = (id) => async (dispatch) => {
     try {
-
+        const token=JSON.parse(localStorage.getItem('token'))
         dispatch({ type: USER_DETAILS_REQUEST })
 
 
         const { data } = await axios.get(`https://backend-bookstore-se81.onrender.com/api/v1/admin/user/${id}`,	{
-            withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
+        headers: {
+                'Authorization': `Bearer ${token}`
+              },    
+        withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
           },)
 
         dispatch({
@@ -326,11 +345,14 @@ export const getUserDetails = (id) => async (dispatch) => {
 // Delete user - ADMIN
 export const deleteUser = (id) => async (dispatch) => {
     try {
-
+        const token=JSON.parse(localStorage.getItem('token'))
         dispatch({ type: DELETE_USER_REQUEST })
 
         const { data } = await axios.delete(`https://backend-bookstore-se81.onrender.com/api/v1/admin/user/${id}`,	{
-            withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
+            headers: {
+                'Authorization': `Bearer ${token}`
+              },    
+        withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
           },)
 
         dispatch({

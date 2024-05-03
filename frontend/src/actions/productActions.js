@@ -39,7 +39,6 @@ export const getProducts =
   
 				let link = `https://backend-bookstore-se81.onrender.com/api/v1/products?page=${currentPage}`;
 				if (keyword) {
-					console.log(keyword)
 					link = `https://backend-bookstore-se81.onrender.com/api/v1/products?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&ratings[gte]=${rating}`;
 				}
 
@@ -62,6 +61,8 @@ export const getProducts =
 
 export const newProduct = (productData) => async (dispatch) => {
 	try {
+        const token=JSON.parse(localStorage.getItem('token'))
+
 		dispatch({ type: NEW_PRODUCT_REQUEST });
 
 		const config = {
@@ -74,6 +75,9 @@ export const newProduct = (productData) => async (dispatch) => {
 			`https://backend-bookstore-se81.onrender.com/api/v1/admin/product/new`,
 			productData,
 			{
+				 headers: {
+                'Authorization': `Bearer ${token}`
+              },    
 				withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
 			  },
 			config
@@ -93,10 +97,15 @@ export const newProduct = (productData) => async (dispatch) => {
 // Delete product (Admin)
 export const deleteProduct = (id) => async (dispatch) => {
 	try {
+        const token=JSON.parse(localStorage.getItem('token'))
+
 		dispatch({ type: DELETE_PRODUCT_REQUEST });
 
 		const { data } = await axios.delete(`https://backend-bookstore-se81.onrender.com/api/v1/admin/product/${id}`,	{
-			withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
+		 headers: {
+                'Authorization': `Bearer ${token}`
+              },    	
+		withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
 		  });
 
 		dispatch({
@@ -114,6 +123,8 @@ export const deleteProduct = (id) => async (dispatch) => {
 // Update Product (ADMIN)
 export const updateProduct = (id, productData) => async (dispatch) => {
 	try {
+        const token=JSON.parse(localStorage.getItem('token'))
+
 		dispatch({ type: UPDATE_PRODUCT_REQUEST });
 
 		const config = {
@@ -126,6 +137,9 @@ export const updateProduct = (id, productData) => async (dispatch) => {
 			`https://backend-bookstore-se81.onrender.com/api/v1/admin/product/${id}`,
 			productData,
 			{
+				 headers: {
+                'Authorization': `Bearer ${token}`
+              },    
 				withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
 			  },
 			config
@@ -145,10 +159,15 @@ export const updateProduct = (id, productData) => async (dispatch) => {
 
 export const getProductDetails = (id) => async (dispatch) => {
 	try {
+        const token=JSON.parse(localStorage.getItem('token'))
+
 		dispatch({ type: PRODUCT_DETAILS_REQUEST });
 
 		const { data } = await axios.get(`https://backend-bookstore-se81.onrender.com/api/v1/product/${id}`,	{
-			withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
+		 headers: {
+                'Authorization': `Bearer ${token}`
+              },    	
+		withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
 		  });
 
 		dispatch({
@@ -165,6 +184,8 @@ export const getProductDetails = (id) => async (dispatch) => {
 
 export const newReview = (reviewData) => async (dispatch) => {
 	try {
+        const token=JSON.parse(localStorage.getItem('token'))
+
 		dispatch({ type: NEW_REVIEW_REQUEST });
 		const config = {
 			headers: {
@@ -173,7 +194,10 @@ export const newReview = (reviewData) => async (dispatch) => {
 		};
 
 		const { data } = await axios.put(`https://backend-bookstore-se81.onrender.com/api/v1/review`, reviewData, 	{
-			withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
+		 headers: {
+                'Authorization': `Bearer ${token}`
+              },    	
+		withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
 		  },config);
 
 		dispatch({
@@ -190,10 +214,15 @@ export const newReview = (reviewData) => async (dispatch) => {
 
 export const getAdminProducts = () => async (dispatch) => {
 	try {
+        const token=JSON.parse(localStorage.getItem('token'))
+
 		dispatch({ type: ADMIN_PRODUCTS_REQUEST });
 
 		const { data } = await axios.get(`https://backend-bookstore-se81.onrender.com/api/v1/admin/products`,	{
-			withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
+		 headers: {
+                'Authorization': `Bearer ${token}`
+              },    	
+		withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
 		  },);
 
 		dispatch({
@@ -211,10 +240,15 @@ export const getAdminProducts = () => async (dispatch) => {
 // Get product reviews
 export const getProductReviews = (id) => async (dispatch) => {
 	try {
+        const token=JSON.parse(localStorage.getItem('token'))
+
 		dispatch({ type: GET_REVIEWS_REQUEST });
 
 		const { data } = await axios.get(`https://backend-bookstore-se81.onrender.com/api/v1/reviews?id=${id}`,	{
-			withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
+		 headers: {
+                'Authorization': `Bearer ${token}`
+              },    	
+		withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
 		  },);
 
 		dispatch({
@@ -232,11 +266,16 @@ export const getProductReviews = (id) => async (dispatch) => {
 // Delete product review
 export const deleteReview = (id, productId) => async (dispatch) => {
 	try {
+        const token=JSON.parse(localStorage.getItem('token'))
+
 		dispatch({ type: DELETE_REVIEW_REQUEST });
 
 		const { data } = await axios.delete(
 			`https://backend-bookstore-se81.onrender.com/api/v1/reviews?id=${id}&productId=${productId}`,	{
-				withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
+			 headers: {
+                'Authorization': `Bearer ${token}`
+              },    	
+			withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
 			  },
 		);
 

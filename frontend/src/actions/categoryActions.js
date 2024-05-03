@@ -15,6 +15,8 @@ import {
 
 export const newCategory = (formData) => async (dispatch) => {
   try {
+    const token=JSON.parse(localStorage.getItem('token'))
+
     dispatch({ type: NEW_CATRGORY_REQUEST });
 
     const config = {
@@ -27,7 +29,10 @@ export const newCategory = (formData) => async (dispatch) => {
       `https://backend-bookstore-se81.onrender.com/api/v1/admin/genres/addgenre`,
       formData,
       {
-				withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }, 
+        withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
 			  },
       config
     );
@@ -45,10 +50,15 @@ export const newCategory = (formData) => async (dispatch) => {
 
 export const getCategory = () => async (dispatch) => {
   try {
+    const token=JSON.parse(localStorage.getItem('token'))
+
     dispatch({ type: ALL_CATEGORY_REQUEST });
 
     const { data } = await axios.get("https://backend-bookstore-se81.onrender.com/api/v1/genres",	{
-      withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }, 
+    withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
       },);
 
     dispatch({
@@ -66,10 +76,15 @@ export const getCategory = () => async (dispatch) => {
 // Delete CATEGORY (Admin)
 export const dltCategory = (id) => async (dispatch) => {
   try {
+    const token=JSON.parse(localStorage.getItem('token'))
+
     dispatch({ type: DELETE_CATEGORY_REQUEST });
 
     const { data } = await axios.delete(`https://backend-bookstore-se81.onrender.com/api/v1/movies/${id}`,	{
-      withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },  
+    withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
       },);
 
     dispatch({
