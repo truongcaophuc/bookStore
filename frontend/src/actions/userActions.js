@@ -54,7 +54,7 @@ export const login = (email, password) => async (dispatch) => {
         const {data}= await axios.post('https://backend-bookstore-se81.onrender.com/api/v1/login', { email, password }, {
             withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
           },config)
-          document.cookie = `token=${data.token}`;
+         localStorage.setItem("token",data.token)
         dispatch({
             type: LOGIN_SUCCESS,
             payload: data.user
@@ -79,9 +79,8 @@ export const register = (userData) => async (dispatch) => {
                 'Content-Type': 'multipart/form-data'
             }
         }
-        console.log("Gửi yêu cầu thành công")
         const { data } = await axios.post('https://backend-bookstore-se81.onrender.com/api/v1/register', userData, config)
-        document.cookie = `token=${data.token}`;
+        localStorage.setItem("token",data.token)
         dispatch({
             type: REGISTER_USER_SUCCESS,
             payload: data.user
